@@ -1,0 +1,25 @@
+<section style="padding: 3rem 2rem 0 2rem;">
+  <h1>Lista de tarias</h1>
+  <div class="container-fluid">
+    <form class="d-flex" [formGroup]="taskFormGroup" (ngSubmit)="onSubmit()" ngNativeValidate>
+      <label>Tarea:&nbsp;&nbsp;</label>
+      <input formControlName="tasks" class="form-control me-2" (keypress)="onKeyPress($event)" placeholder="Ingrese una tarea..." aria-label="Search" style="width: 30rem">
+      <button class="btn btn-outline-success" type="submit">Agregar</button>
+    </form>
+  </div>
+
+  <div>
+    <ul>
+      <li *ngFor="let t of task" style="margin-bottom: 1rem">
+        <mat-checkbox [(ngModel)]="t.complete"
+                      [color]="t.color"
+                      (ngModelChange)="updateAllComplete()">
+          {{t.name}}
+        </mat-checkbox>
+        <button mat-button (click)="removeTask(t.id)" *ngIf="!t.complete" style="margin-left: 2rem">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </li>
+    </ul>
+  </div>
+</section>
