@@ -8,8 +8,10 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class HomeComponent implements OnInit {
 
+  regexp = "^[a-z0-9_-]{8,15}$";
+
   taskFormGroup!: FormGroup;
-  tasks = new FormControl('', Validators.required);
+  tasks = new FormControl('', [Validators.required, Validators.pattern('[0-9a-zA-Z ]*')]);
 
   task: any[] = [
     {id: 1, name: 'tarea 1', complete: false, color: 'primary'},
@@ -41,11 +43,18 @@ export class HomeComponent implements OnInit {
       complete: false,
       color: 'primary'
     }
-    this.task.push(obj)
-    console.log(this.tasks.value)
+
+    if (this.tasks.valid){
+      if(this.tasks.value == '' || this.tasks.value == null){
+        console.log("esta vacio")
+      }else{
+        this.task.push(obj)
+      }
+    }
   }
 
   onKeyPress(event: any) {
+    console.log(event.charCode)
     const regexpNumber = /[0-9a-zA-Z ]/;
     let inputCharacter = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !regexpNumber.test(inputCharacter)) {
